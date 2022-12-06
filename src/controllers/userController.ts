@@ -1,14 +1,13 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { HttpError } from "http-errors";
 import { verifyToken } from "../middlewares/jwtMiddlewares";
-import { getUserDetails, updateFirstName, updateLastName, getUserDetailsById } from "../services/userServices";
+import { getUserDetailsById, updateFirstName, updateLastName } from "../services/userServices";
 
 // declare the router
 const router = Router();
 
 // routes
 router.get("/user/:userID", verifyToken, getUserDetailsById);
-router.get("/user/details", verifyToken, getUserDetails);
 router.put("/user/update/lastname", verifyToken, updateLastName);
 router.put("/user/update/firstname", verifyToken, updateFirstName);
 

@@ -11,11 +11,11 @@ export const getCommentById = async (
     try {
 
         // get the comment id from the request
-        const commentID = Number(req.params);
+        const { commentID } = req.params;
 
         // get comment details
         const comment = await prisma.comment.findUnique({
-            where: { id: commentID },
+            where: { id: Number(commentID) },
             select: {
                 id: true,
                 content: true,
@@ -44,22 +44,16 @@ export const getCommentByPostId = async (
     try {
 
         // get the post id from the request
-        const postID = Number(req.params);
+        const { postID } = req.params;
 
         // get comment details
         const comments = await prisma.comment.findMany({
-            where: { postId: postID },
+            where: { postId: Number(postID) },
             select: {
                 id: true,
                 content: true,
             }
         });
-
-        // if comment does not exist
-        if (!comments) {
-            next(createHttpError(400, { message: "Comment does not exist." }));
-            return;
-        }
 
         // return the comment
         res.status(200).json({ data: comments });
@@ -77,11 +71,11 @@ export const getCommentReplies = async (
     try {
 
         // get the comment id from the request
-        const commentID = Number(req.params);
+        const { commentID } = req.params;
 
         // get comment details
         const replies = await prisma.comment.findMany({
-            where: { replytoId: commentID },
+            where: { replytoId: Number(commentID) },
             select: {
                 id: true,
                 content: true,
@@ -140,7 +134,7 @@ export const createComment = async (
             const comment = await prisma.comment.create({
                 data: {
                     author: {
-                        connect: { id: userID },
+                        connect: { id: Number(userID) },
                     },
                     content: content || undefined,
                     post: {
@@ -160,7 +154,7 @@ export const createComment = async (
             const comment = await prisma.comment.create({
                 data: {
                     author: {
-                        connect: { id: userID },
+                        connect: { id: Number(userID) },
                     },
                     content: content || undefined,
                     post: {
@@ -191,11 +185,11 @@ export const updateComment = async (
         const { content } = req.body;
 
         // get the comment id from the request
-        const commentID = Number(req.params);
+        const { commentID } = req.params;
 
         // get comment details
         const comment = await prisma.comment.findUnique({
-            where: { id: commentID },
+            where: { id: Number(commentID) },
             select: {
                 id: true,
                 content: true,
@@ -217,7 +211,7 @@ export const updateComment = async (
 
         // update the comment
         const updatedComment = await prisma.comment.update({
-            where: { id: commentID },
+            where: { id: Number(commentID) },
             data: {
                 content: content || undefined,
             },
@@ -242,11 +236,11 @@ export const deleteComment = async (
         const { userID } = res.locals;
 
         // get the comment id from the request
-        const commentID = Number(req.params);
+        const { commentID } = req.params;
 
         // get comment details
         const comment = await prisma.comment.findUnique({
-            where: { id: commentID },
+            where: { id: Number(commentID) },
             select: {
                 id: true,
                 content: true,
@@ -268,7 +262,7 @@ export const deleteComment = async (
 
         // delete the comment
         const deletedComment = await prisma.comment.delete({
-            where: { id: commentID },
+            where: { id: Number(commentID) },
         });
 
         // return the comment

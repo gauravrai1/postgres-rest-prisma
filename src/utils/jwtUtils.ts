@@ -1,9 +1,9 @@
 import * as jwt from "jsonwebtoken";
 
 // decode & verify token
-export const decodeToken = (token: string) =>
+export const decodeToken = (token: string, SECRET_KEY: string) =>
   new Promise<jwt.JwtPayload | null>(async resolve => {
-    const SECRET_KEY  = process.env.SECRET_KEY;
+    
     jwt.verify(token, SECRET_KEY, (err, payload) => {
       if (err) {
         resolve(null);
@@ -22,7 +22,7 @@ export const generateAccessToken = (
 ): string => {
   const options: jwt.SignOptions = {
     issuer: "rai-gaurav",
-    audience: id,
+    audience: id.toString(),
     expiresIn: "1h"
   };
   return jwt.sign({ email, id }, process.env.JWT_ACCESS_KEY!, options);

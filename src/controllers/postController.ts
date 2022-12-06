@@ -11,7 +11,7 @@ router.post("/post", verifyToken, createDraft);
 router.get("/post/:postID", verifyToken, getPostById);
 router.get("/post/user/:userID", verifyToken, getPostsByUserId);
 router.get("/post/drafts/:userID", verifyToken, getDraftsByUserId);
-router.get("/post/feed", verifyToken, feed);
+router.get("/feed", verifyToken, feed);
 router.put("/post/publish/:postID", verifyToken, togglePublish);
 router.put("/post/update/:postID", verifyToken, updatePost);
 router.delete("/post/delete/:postID", verifyToken, deletePost);

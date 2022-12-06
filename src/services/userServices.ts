@@ -9,6 +9,8 @@ export const getUserDetailsById = async (
 ) => {
   try {
 
+    console.log("getUserDetailsById");
+
     // get the user id from the request
     const userID = Number(req.params.userID);
     
@@ -21,38 +23,6 @@ export const getUserDetailsById = async (
         lastName: true,
         email: true,
       },
-    });
-
-    // if user does not exist
-    if (!user) {
-      next(createHttpError(400, { message: "User does not exist." }));
-      return;
-    }
-
-    // return user details
-    res.status(200).json({ data: user });
-    return;
-  } catch (err) {
-    next(err);
-  }
-};
-
-export const getUserDetails = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    // get the user id from the request
-    const { userID } = res.locals;
-
-    // get user details
-    const user = await Prisma.user.findUnique({
-      where: { id: userID },
-      select: {
-        email: true,
-        id: true
-      }
     });
 
     // if user does not exist

@@ -10,6 +10,8 @@ export const createDraft = async (
 ) => {
     try {
 
+        console.log("create draft");
+
         // get the user id and content from the request
         const { userID } = res.locals;
         const { content, published } = req.body;
@@ -40,12 +42,14 @@ export const getPostById = async (
 ) => {
     try {
 
+        console.log("post by id");
+
         // get the post id from the request
-        const postID = Number(req.params);
+        const { postID } = req.params;
 
         // get post details
         const post = await prisma.post.findUnique({
-            where: { id: postID },
+            where: { id: Number(postID) },
             select: {
                 id: true,
                 content: true,
@@ -74,13 +78,16 @@ export const getPostsByUserId = async (
 ) => {
     try {
 
+        console.log("posts by user id");
+        console.log(req.params);
+
         // get the user id from the request
-        const userID = Number(req.params);
+        const { userID } = req.params;
 
         // get posts
         const posts = await prisma.user.findUnique({
           where: {
-            id: userID
+            id: Number(userID)
           },
         })
         .posts({
@@ -105,12 +112,12 @@ export const getDraftsByUserId = async (
     try {
 
         // get the user id from the request
-        const userID = Number(req.params);
+        const { userID } = req.params;
 
         // get post details
         const posts = await prisma.user.findUnique({
             where: {
-              id: userID
+              id: Number(userID)
             },
           })
           .posts({
@@ -167,12 +174,14 @@ export const togglePublish = async (
 ) => {
     try {
 
+        console.log("toggle publish");
+
         // get the post id from the request
-        const postID = Number(req.params);
+        const { postID } = req.params;
 
         // get post details
         const post = await prisma.post.findUnique({
-            where: { id: postID },
+            where: { id: Number(postID) },
             select: {
                 id: true,
                 published: true,
@@ -192,9 +201,11 @@ export const togglePublish = async (
             return;
         }
 
+        console.log(postID)
+
         // toggle publish
         const updatedPost = await prisma.post.update({
-            where: { id: postID },
+            where: { id: Number(postID) },
             data: {
                 published: true
             }
@@ -216,11 +227,11 @@ export const updatePost = async (
     try {
 
         // get the post id from the request
-        const postID = Number(req.params);
+        const { postID } = req.params;
 
         // get post details
         const post = await prisma.post.findUnique({
-            where: { id: postID },
+            where: { id: Number(postID) },
             select: {
                 id: true,
                 published: true,
@@ -240,9 +251,9 @@ export const updatePost = async (
             return;
         }
 
-        // toggle publish
+        // content update operation
         const updatedPost = await prisma.post.update({
-            where: { id: postID },
+            where: { id: Number(postID) },
             data: {
                 content: req.body.content
             }
@@ -264,11 +275,11 @@ export const deletePost = async (
     try {
 
         // get the post id from the request
-        const postID = Number(req.params);
+        const { postID } = req.params;
 
         // get post details
         const post = await prisma.post.findUnique({
-            where: { id: postID },
+            where: { id: Number(postID) },
             select: {
                 id: true,
                 published: true,
@@ -290,7 +301,7 @@ export const deletePost = async (
 
         // delete post
         await prisma.post.delete({
-            where: { id: postID },
+            where: { id: Number(postID) },
         });
 
         // return post details
@@ -300,4 +311,3 @@ export const deletePost = async (
         next(err);
     }
 }
-
