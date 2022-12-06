@@ -176,12 +176,19 @@ export const togglePublish = async (
             select: {
                 id: true,
                 published: true,
+                authorId: true,
             }
         });
 
         // if post does not exist
         if (!post) {
             next(createHttpError(400, { message: "Post does not exist." }));
+            return;
+        }
+
+        // check if post is of the same user
+        if (post.authorId !== res.locals.userID) {
+            next(createHttpError(400, { message: "You are not authorized to perform this action." }));
             return;
         }
 
@@ -217,12 +224,19 @@ export const updatePost = async (
             select: {
                 id: true,
                 published: true,
+                authorId: true,
             }
         });
 
         // if post does not exist
         if (!post) {
             next(createHttpError(400, { message: "Post does not exist." }));
+            return;
+        }
+
+        // check if post if of the user
+        if (post.authorId !== res.locals.userID) {
+            next(createHttpError(400, { message: "You are not authorized to update this post." }));
             return;
         }
 
@@ -258,12 +272,19 @@ export const deletePost = async (
             select: {
                 id: true,
                 published: true,
+                authorId: true
             }
         });
 
         // if post does not exist
         if (!post) {
             next(createHttpError(400, { message: "Post does not exist." }));
+            return;
+        }
+
+        // check if post if of the user
+        if (post.authorId !== res.locals.userID) {
+            next(createHttpError(400, { message: "You are not authorized to delete this post." }));
             return;
         }
 

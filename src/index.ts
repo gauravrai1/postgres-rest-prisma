@@ -1,6 +1,9 @@
 import express from "express";
 import morgan from "morgan";
 import init from "./utils/primaService";
+import authController from "./controllers/authController";
+import userController from "./controllers/userController";
+import postController from "./controllers/postController";
 
 // init services
 init()
@@ -13,6 +16,11 @@ init()
     // add middlewares
     app.use(express.json());
     app.use(morgan("tiny"));
+
+    // controllers
+    app.use(authController);
+    app.use(userController);
+    app.use(postController);
 
     // basic route
     app.get("/", (req, res): void => {
