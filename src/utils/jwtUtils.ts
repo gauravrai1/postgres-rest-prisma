@@ -18,13 +18,12 @@ export const decodeToken = (token: string) =>
 // generate access token
 export const generateAccessToken = (
   email: string,
-  name: string,
-  id: string
+  id: number
 ): string => {
   const options: jwt.SignOptions = {
     issuer: "rai-gaurav",
     audience: id,
     expiresIn: "1h"
   };
-  return jwt.sign({ email, name, id }, process.env.JWT_ACCESS_KEY!, options);
+  return jwt.sign({ email, id }, process.env.JWT_ACCESS_KEY!, options);
 };
