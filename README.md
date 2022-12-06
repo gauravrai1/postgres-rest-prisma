@@ -26,4 +26,4 @@ Launch your server with this command:
 npm run dev
 ```
 
-Navigate to [http://localhost:4000/](http://localhost:4000/) in your browser to explore the API of server in a using this [Postman Documentation](https://documenter.getpostman.com/view/3115554/2s8YzP35EX#1deb6fec-2994-4015-9591-63083fa9a109).
+Navigate to [http://localhost:4000/](http://localhost:4000/) in your browser to explore the API of server by using this [Postman Documentation](https://documenter.getpostman.com/view/3115554/2s8YzP35EX#1deb6fec-2994-4015-9591-63083fa9a109).
